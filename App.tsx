@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, CSSProperties } from 'react';
 import Navbar from './components/Navbar';
 import Viewfinder from './components/Viewfinder';
 import { EXPERIENCES, SKILL_GROUPS, PROJECTS, EDUCATION, IMAGES } from './constants';
@@ -7,9 +7,33 @@ import { EXPERIENCES, SKILL_GROUPS, PROJECTS, EDUCATION, IMAGES } from './consta
 const App: React.FC = () => {
   const [isLightMode, setIsLightMode] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const toggleTheme = () => {
     setIsLightMode(!isLightMode);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setFormSubmitted(true);
+        form.reset();
+        setTimeout(() => setFormSubmitted(false), 4000);
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du formulaire', error);
+    }
   };
 
   useEffect(() => {
@@ -36,25 +60,25 @@ const App: React.FC = () => {
     {
       title: "Échecs",
       emoji: "♟️",
-      desc: "Analyse stratégique et résolution de problèmes sous pression.",
+      desc: "Analyse stratégique et résolution de problèmes.",
       img: IMAGES.passions.chess
     },
     {
       title: "Formule 1",
       emoji: "🏎️",
-      desc: "Passion pour l'optimisation, la performance et l'ingénierie.",
+      desc: "Passion pour l'optimisation, la performance et la compétition.",
       img: IMAGES.passions.f1
     },
     {
       title: "Photographie",
       emoji: "📸",
-      desc: "Souci du détail visuel et de la composition ergonomique.",
+      desc: "Souci du détail visuel et de la composition ainsi que du post-traitement.",
       img: IMAGES.passions.photography
     },
     {
       title: "Jeux Vidéo",
       emoji: "🎮",
-      desc: "Esprit d'équipe, réactivité et immersion technologique.",
+      desc: "Esprit d'équipe, réactivité et compétition.",
       img: IMAGES.passions.gaming
     }
   ];
@@ -72,6 +96,16 @@ const App: React.FC = () => {
   // Style de carte standardisé avec effet "Glow" discret au survol
   const cardHoverStyles = "transition-all duration-500 hover:border-[var(--accent)] hover:shadow-2xl hover:shadow-[var(--accent)]/[0.12] hover:bg-[var(--accent)]/[0.01]";
   const buttonMainStyles = "px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-95 shadow-xl shadow-purple-500/30";
+  const sectionInner = "max-w-5xl mx-auto";
+  const projectTitleStyle: CSSProperties = {
+    WebkitTextStroke: '0px transparent',
+    textShadow: '0 2px 10px rgba(0,0,0,0.65), 0 0 1px rgba(255,255,255,0.2)'
+  };
+
+  const projectCategoryStroke: CSSProperties = {
+    WebkitTextStroke: '0px transparent',
+    textShadow: '0 1px 3px rgba(0,0,0,0.35)'
+  };
 
   return (
     <div className="relative overflow-x-hidden theme-transition selection:bg-[var(--accent)] selection:text-white">
@@ -89,13 +123,13 @@ const App: React.FC = () => {
         </svg>
       </button>
 
-      {/* Hero Section */}
+      {/* portrait Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative px-6 py-20 bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)]">
         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at center, var(--accent) 0%, transparent 70%)` }}></div>
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 z-10 w-full">
+        <div className={`${sectionInner} flex flex-col md:flex-row items-center gap-12 z-10 w-full`}>
           <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden border-4 border-[var(--accent)] opacity-95 shadow-2xl relative group shrink-0">
             <img 
-              src={IMAGES.hero} 
+              src={IMAGES.portrait} S
               alt="Nassim Manseur" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
@@ -131,7 +165,7 @@ const App: React.FC = () => {
 
       {/* Experience Section */}
       <section id="experience" className="py-24 px-6 bg-[var(--bg-primary)]">
-        <div className="max-w-5xl mx-auto">
+        <div className={sectionInner}>
           <SectionHeader subtitle="Expériences" title="Parcours Pro" />
           <div className="relative border-l-2 border-[var(--border-color)] ml-3">
             {EXPERIENCES.map((exp, idx) => (
@@ -160,7 +194,7 @@ const App: React.FC = () => {
 
       {/* Education Section */}
       <section id="education" className="py-24 px-6 bg-[var(--bg-secondary)]">
-        <div className="max-w-5xl mx-auto">
+        <div className={sectionInner}>
           <SectionHeader subtitle="Formation" title="Diplômes" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {EDUCATION.map((edu, idx) => (
@@ -181,7 +215,7 @@ const App: React.FC = () => {
 
       {/* Skills Grid */}
       <section id="skills" className="py-24 px-6 bg-[var(--bg-primary)]">
-        <div className="max-w-5xl mx-auto">
+        <div className={sectionInner}>
           <SectionHeader subtitle="Expertise" title="Compétences" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {SKILL_GROUPS.map((group, idx) => (
@@ -202,7 +236,7 @@ const App: React.FC = () => {
 
       {/* About Section */}
       <section id="about" className="py-24 px-6 bg-[var(--bg-secondary)]">
-        <div className="max-w-5xl mx-auto">
+        <div className={sectionInner}>
           <SectionHeader subtitle="Profil" title="Passions & Atouts" />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6 text-[var(--text-secondary)] leading-relaxed text-lg font-light">
@@ -218,7 +252,7 @@ const App: React.FC = () => {
               {passions.map((passion, pIdx) => (
                 <div key={pIdx} className="relative group bg-[var(--bg-primary)] p-8 rounded-3xl border border-[var(--border-color)] overflow-hidden transition-all duration-500 h-44 flex flex-col justify-center">
                   <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-500 scale-110 group-hover:scale-100 bg-cover bg-center grayscale group-hover:grayscale-0"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-45 transition-all duration-700 ease-out transform scale-110 group-hover:scale-100 bg-cover bg-center grayscale group-hover:grayscale-0"
                     style={{ backgroundImage: `url(${passion.img})` }}
                   ></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] to-transparent opacity-60"></div>
@@ -236,7 +270,7 @@ const App: React.FC = () => {
 
       {/* Projects Gallery */}
       <section id="projects" className="py-24 px-6 bg-[var(--bg-primary)]">
-        <div className="max-w-5xl mx-auto">
+        <div className={sectionInner}>
           <SectionHeader subtitle="Portfolio" title="Projets" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             {PROJECTS.map((project) => (
@@ -250,12 +284,11 @@ const App: React.FC = () => {
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 opacity-70 blur-[2px] group-hover:blur-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 p-10 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest mb-2 block font-bold">{project.category}</span>
-                  <h4 className="text-3xl font-bold mb-6 tracking-tight leading-tight text-[var(--text-primary)]">{project.title}</h4>
+                <div className="absolute bottom-0 left-0 p-8 pb-10 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <h4 className="text-3xl font-bold mb-4 tracking-tight leading-tight text-[var(--text-primary)]" style={projectTitleStyle}>{project.title}</h4>
                   <div className="flex gap-2 flex-wrap opacity-0 group-hover:opacity-100 transition-opacity delay-100">
                     {project.tags.map((tag, tIdx) => (
                       <span key={tIdx} className="px-3 py-1 text-[10px] bg-[var(--bg-primary)] text-[var(--text-secondary)] rounded-full border border-[var(--border-color)] uppercase font-bold">{tag}</span>
@@ -270,7 +303,7 @@ const App: React.FC = () => {
 
       {/* Contact Section */}
       <section id="contact" className="py-24 px-6 bg-[var(--bg-secondary)]">
-        <div className="max-w-5xl mx-auto">
+        <div className={sectionInner}>
           <SectionHeader subtitle="Contact" title="Me contacter" />
           <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 bg-[var(--bg-primary)] p-8 md:p-12 rounded-[2.5rem] border border-[var(--border-color)] shadow-2xl ${cardHoverStyles}`}>
             <div className="lg:col-span-5 space-y-10">
@@ -307,8 +340,8 @@ const App: React.FC = () => {
                 <a href="https://github.com/ManseurNassim" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl font-bold hover:bg-[var(--accent)] hover:text-white transition-all shadow-lg shadow-purple-500/5">GitHub</a>
               </div>
             </div>
-            <div className="lg:col-span-7">
-              <form action="https://formspree.io/f/xnqewayn" method="POST" className="space-y-4">
+            <div className="lg:col-span-7 relative">
+              <form action="https://formspree.io/f/xnqewayn" method="POST" className="space-y-4" onSubmit={handleFormSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input type="text" name="first" placeholder="Prénom" className="w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl px-6 py-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-all" required />
                   <input type="text" name="last" placeholder="Nom" className="w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl px-6 py-4 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-all" required />
@@ -319,6 +352,19 @@ const App: React.FC = () => {
                   Envoyer
                 </button>
               </form>
+              
+              {/* Success Message */}
+              <div className={`absolute inset-0 flex items-center justify-center bg-[var(--bg-primary)]/95 backdrop-blur-sm rounded-2xl transition-all duration-500 ${formSubmitted ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                <div className={`text-center px-8 transform transition-all duration-500 ${formSubmitted ? 'scale-100 translate-y-0' : 'scale-75 translate-y-4'}`}>
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[var(--accent)] flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Message envoyé !</h3>
+                  <p className="text-[var(--text-secondary)]">Je vous répondrai dans les plus brefs délais.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

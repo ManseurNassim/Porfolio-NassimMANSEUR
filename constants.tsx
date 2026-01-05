@@ -3,10 +3,10 @@ import { Project, Experience, SkillGroup } from './types';
 
 // Centralisation des images pour modification facile
 export const IMAGES = {
-  hero: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+  portrait: "/Nassim.jpg",
   passions: {
-    chess: "https://images.unsplash.com/photo-1524143878510-e3b8d6312402?q=80&w=800&auto=format&fit=crop",
-    f1: "https://images.unsplash.com/photo-1541890289-b86df5bafd81?q=80&w=800&auto=format&fit=crop",
+    chess: "/echecs.png",
+    f1: "/formule1.png",
     photography: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop",
     gaming: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop"
   }
@@ -93,7 +93,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    title: "Portfolio Photographie",
+    title: "Site web - Portfolio Photographie",
     category: "Vue.js",
     image: "https://picsum.photos/id/250/800/600",
     link: "https://nassimphotos.netlify.app/",
@@ -101,26 +101,26 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 2,
-    title: "Application Gestion Immobilière",
-    category: "React / PHP",
-    image: "https://picsum.photos/id/160/800/600",
-    link: "https://youtu.be/Va5pQMZbCtI",
-    tags: ["React", "API", "Fullstack"]
+    title: "Site web - Bibliothèque de jeux vidéo",
+    category: "Fullstack | Node + React",
+    image: "https://images.unsplash.com/photo-1750049452926-fe38c66c4298?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    link: "https://www.youtube.com/watch?v=Va5pQMZbCtI",
+    tags: ["Node.js", "Express.js", "MongoDB", "React", "API REST"]
   },
   {
     id: 3,
-    title: "Analyse de Données SQL",
-    category: "Database",
+    title: "Projet en cours d'importation",
+    category: "À venir",
     image: "https://picsum.photos/id/201/800/600",
-    link: "https://drive.google.com/drive/folders/11YkzDIl4AW6UbrdPMUvk2Yha6m5DFqFT",
-    tags: ["PostgreSQL", "JSONB", "SAE"]
+    link: "#",
+    tags: ["En préparation"]
   },
   {
     id: 4,
-    title: "Simulation Java Swing",
-    category: "Software",
+    title: "Projet en cours d'importation",
+    category: "À venir",
     image: "https://picsum.photos/id/180/800/600",
-    link: "https://github.com/ManseurNassim/SAE2.01Java",
-    tags: ["Java", "JUnit", "MVC"]
+    link: "#",
+    tags: ["En préparation"]
   }
 ];

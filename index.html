@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nassim Manseur | Développeur & Architecte Logiciel</title>
+    <link rel="icon" type="image/png" href="/Nassim.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,8 +53,9 @@
             border-radius: 10px;
         }
 
-        .theme-transition {
-            transition: all 0.3s ease;
+        .theme-transition,
+        .theme-transition * {
+            transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
         }
     </style>
 <script type="importmap">
@@ -68,5 +70,6 @@
 </head>
 <body class="custom-scrollbar">
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>

@@ -97,7 +97,10 @@ const Navbar: React.FC<NavbarProps> = ({ isLightMode, toggleTheme }) => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-[var(--bg-primary)] z-50 md:hidden flex flex-col items-center justify-center gap-8 transition-transform duration-500 ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+      <div
+        className={`fixed inset-0 bg-[var(--bg-primary)] z-50 md:hidden flex flex-col items-center justify-center gap-8 transition-all duration-500 ease-out ${isOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'}`}
+        aria-hidden={!isOpen}
+      >
         {navLinks.map((link) => (
           <a 
             key={link.name} 
