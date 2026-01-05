@@ -8,6 +8,7 @@ const App: React.FC = () => {
   const [isLightMode, setIsLightMode] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleTheme = () => {
     setIsLightMode(!isLightMode);
@@ -109,27 +110,29 @@ const App: React.FC = () => {
 
   return (
     <div className="relative overflow-x-hidden theme-transition selection:bg-[var(--accent)] selection:text-white">
-      <Navbar isLightMode={isLightMode} toggleTheme={toggleTheme} />
+      <Navbar isLightMode={isLightMode} toggleTheme={toggleTheme} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <Viewfinder />
 
-      {/* Bouton retour en haut */}
-      <button 
-        onClick={scrollToTop}
-        className={`fixed bottom-12 right-12 z-[90] w-10 h-10 bg-[var(--accent)] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 transform ${showScrollTop ? 'translate-y-0 opacity-40 hover:opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'} hover:scale-110 active:scale-95`}
-        aria-label="Retour au sommet"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
-        </svg>
-      </button>
+      {/* Contenu principal avec blur optionnel */}
+      <div className={`transition-all duration-300 ${isMenuOpen ? 'blur-sm pointer-events-none' : ''}`}>
+        {/* Bouton retour en haut */}
+        <button 
+          onClick={scrollToTop}
+          className={`fixed bottom-12 right-12 z-[90] w-10 h-10 bg-[var(--accent)] text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 transform ${showScrollTop && !isMenuOpen ? 'translate-y-0 opacity-40 hover:opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'} hover:scale-110 active:scale-95`}
+          aria-label="Retour au sommet"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
 
-      {/* portrait Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative px-6 py-20 bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)]">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at center, var(--accent) 0%, transparent 70%)` }}></div>
-        <div className={`${sectionInner} flex flex-col md:flex-row items-center gap-12 z-10 w-full`}>
+        {/* portrait Section */}
+        <section id="home" className="min-h-screen flex items-center justify-center relative px-6 py-20 bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)]">
+          <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at center, var(--accent) 0%, transparent 70%)` }}></div>
+          <div className={`${sectionInner} flex flex-col md:flex-row items-center gap-12 z-10 w-full`}>
           <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden border-4 border-[var(--accent)] opacity-95 shadow-2xl relative group shrink-0">
             <img 
-              src={IMAGES.portrait} S
+              src={IMAGES.portrait}
               alt="Nassim Manseur" 
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
@@ -252,14 +255,14 @@ const App: React.FC = () => {
               {passions.map((passion, pIdx) => (
                 <div key={pIdx} className="relative group bg-[var(--bg-primary)] p-8 rounded-3xl border border-[var(--border-color)] overflow-hidden transition-all duration-500 h-44 flex flex-col justify-center">
                   <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-45 transition-all duration-700 ease-out transform scale-110 group-hover:scale-100 bg-cover bg-center grayscale group-hover:grayscale-0"
+                    className="absolute inset-0 opacity-65 md:opacity-0 md:group-hover:opacity-45 transition-all duration-700 ease-out transform scale-110 md:group-hover:scale-100 bg-cover bg-center"
                     style={{ backgroundImage: `url(${passion.img})` }}
                   ></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] to-transparent opacity-60"></div>
-                  <div className="relative z-10 transition-transform duration-500 group-hover:-translate-y-2">
-                    <div className="text-3xl mb-3 transform group-hover:scale-110 transition-transform duration-300 inline-block">{passion.emoji}</div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 md:opacity-60"></div>
+                  <div className="relative z-10 transition-transform duration-500 md:group-hover:-translate-y-2">
+                    <div className="text-3xl mb-3 transform md:group-hover:scale-110 transition-transform duration-300 inline-block">{passion.emoji}</div>
                     <h4 className="font-bold text-[var(--text-primary)] text-lg mb-1">{passion.title}</h4>
-                    <p className="text-[10px] text-[var(--text-secondary)] leading-tight group-hover:text-[var(--text-primary)] transition-colors">{passion.desc}</p>
+                    <p className="text-[10px] text-[var(--text-secondary)] leading-tight md:group-hover:text-[var(--text-primary)] transition-colors">{passion.desc}</p>
                   </div>
                 </div>
               ))}
@@ -284,12 +287,12 @@ const App: React.FC = () => {
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 opacity-70 blur-[2px] group-hover:blur-0"
+                  className="w-full h-full object-cover transition-all duration-700 md:group-hover:scale-105 opacity-70 md:opacity-70 blur-0 md:blur-[2px] md:group-hover:blur-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 p-8 pb-10 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 md:opacity-80 md:group-hover:opacity-95 transition-opacity"></div>
+                <div className="absolute bottom-0 left-0 p-8 pb-10 w-full transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
                   <h4 className="text-3xl font-bold mb-4 tracking-tight leading-tight text-[var(--text-primary)]" style={projectTitleStyle}>{project.title}</h4>
-                  <div className="flex gap-2 flex-wrap opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                  <div className="flex gap-2 flex-wrap opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity delay-100">
                     {project.tags.map((tag, tIdx) => (
                       <span key={tIdx} className="px-3 py-1 text-[10px] bg-[var(--bg-primary)] text-[var(--text-secondary)] rounded-full border border-[var(--border-color)] uppercase font-bold">{tag}</span>
                     ))}
@@ -378,6 +381,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
