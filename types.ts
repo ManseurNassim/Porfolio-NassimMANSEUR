@@ -1,10 +1,10 @@
-
 export interface Project {
   id: number;
   title: string;
   category: string;
   image: string;
   link: string;
+  githubLink?: string | string[];
   tags: string[];
 }
 

@@ -97,6 +97,7 @@ export const PROJECTS: Project[] = [
     category: "Vue.js",
     image: "https://picsum.photos/id/250/800/600",
     link: "https://nassimphotos.netlify.app/",
+    githubLink: "https://github.com/ManseurNassim/PhotoNassim",
     tags: ["Vue.js", "Design", "Photo"]
   },
   {
@@ -105,6 +106,10 @@ export const PROJECTS: Project[] = [
     category: "Fullstack | Node + React",
     image: "https://images.unsplash.com/photo-1750049452926-fe38c66c4298?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "https://gameverse.nassimmanseur.fr/",
+    githubLink: [
+      "https://github.com/ManseurNassim/GameVerse-frontend", 
+      "https://github.com/ManseurNassim/GameVerse-backend"
+    ],
     tags: ["Node.js", "Express.js", "MongoDB", "React", "API REST"]
   },
   {

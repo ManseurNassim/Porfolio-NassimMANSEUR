@@ -277,11 +277,8 @@ const App: React.FC = () => {
           <SectionHeader subtitle="Portfolio" title="Projets" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             {PROJECTS.map((project) => (
-              <a 
+              <div 
                 key={project.id} 
-                href={project.link} 
-                target="_blank" 
-                rel="noopener noreferrer"
                 className="group relative block rounded-3xl overflow-hidden aspect-[16/10] bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-xl"
               >
                 <img 
@@ -290,7 +287,29 @@ const App: React.FC = () => {
                   className="w-full h-full object-cover transition-all duration-700 md:group-hover:scale-105 opacity-70 md:opacity-70 blur-0 md:blur-[2px] md:group-hover:blur-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 md:opacity-80 md:group-hover:opacity-95 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 p-8 pb-10 w-full transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
+                
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10" aria-label={`Voir le projet ${project.title}`}></a>
+
+                {project.githubLink && (
+                  <div className="absolute top-6 right-6 z-20 flex flex-col gap-2">
+                    {(Array.isArray(project.githubLink) ? project.githubLink : [project.githubLink]).map((link, i) => (
+                      <a 
+                        key={i}
+                        href={link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="w-12 h-12 bg-[var(--bg-primary)]/80 backdrop-blur-sm border border-[var(--border-color)] rounded-full flex items-center justify-center text-[var(--text-primary)] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-[#18181b] group-hover:border-[#18181b] group-hover:text-white hover:scale-110 shadow-lg" 
+                        aria-label={`Code source sur GitHub ${Array.isArray(project.githubLink) ? `(Partie ${i + 1})` : ''}`}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                )}
+
+                <div className="absolute bottom-0 left-0 p-8 pb-10 w-full transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 pointer-events-none z-20">
                   <h4 className="text-3xl font-bold mb-4 tracking-tight leading-tight text-[var(--text-primary)]" style={projectTitleStyle}>{project.title}</h4>
                   <div className="flex gap-2 flex-wrap opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity delay-100">
                     {project.tags.map((tag, tIdx) => (
@@ -298,7 +317,7 @@ const App: React.FC = () => {
                     ))}
                   </div>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
