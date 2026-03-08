@@ -96,7 +96,7 @@ export const PROJECTS: Project[] = [
     title: "Site web - Portfolio Photographie",
     category: "Vue.js",
     image: "https://picsum.photos/id/250/800/600",
-    link: "https://nassimphotos.netlify.app/",
+    link: "https://photo.nassimmanseur.fr/",
     githubLink: "https://github.com/ManseurNassim/PhotoNassim",
     tags: ["Vue.js", "Design", "Photo"]
   },

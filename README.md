@@ -23,4 +23,4 @@ Le projet repose sur des technologies modernes axées sur la performance et la m
 
 - **Dossier `components/` :** Contient des briques réutilisables comme `Navbar` ou `Viewfinder`.
 - **Fichiers de base (`App.tsx`, `index.tsx`) :** Points d'entrée de l'application React.
-- **Typage et Constantes (`types.ts`, `constants.tsx`) :** Concentre toutes les données affichables (expériences, liens GitHub, projets...). Cela permet de facilement modifier le contenu du portfolio de manière centralisée sans toucher à la structure de `App.tsx`!
+- **Typage et Constantes (`types.ts`, `constants.tsx`) :** Concentre toutes les données affichables (expériences, liens GitHub, projets...). Cela permet de facilement modifier le contenu du portfolio de manière centralisée sans toucher à la structure de `App.tsx`.
