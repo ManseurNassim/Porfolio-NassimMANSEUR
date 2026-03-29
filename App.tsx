@@ -139,12 +139,12 @@ const App: React.FC = () => {
             <div className="absolute inset-0 bg-[var(--accent)]/10 mix-blend-color group-hover:opacity-0 transition-opacity"></div>
           </div>
           <div className="text-center md:text-left flex-1">
-            <h2 className="text-[var(--accent)] font-mono text-sm tracking-widest mb-4 uppercase font-bold">Développeur Fullstack</h2>
+            <h2 className="text-[var(--accent)] font-mono text-sm tracking-widest mb-4 uppercase font-bold">Apprenti Ingénieur en Informatique</h2>
             <h1 className="text-5xl md:text-7xl font-heading font-black mb-4 tracking-tighter leading-none">
               Nassim <span className="text-[var(--text-secondary)] block md:inline italic">Manseur</span>
             </h1>
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-light max-w-2xl mb-10 leading-relaxed">
-              Diplômé d'un <span className="text-[var(--text-primary)] font-medium">BUT Informatique</span>, je suis à la recherche de nouvelles opportunités en <span className="text-[var(--text-primary)] font-medium">poursuite d'études</span> ou en <span className="text-[var(--text-primary)] font-medium">milieu professionnel</span>.
+              Titulaire d'un <span className="text-[var(--text-primary)] font-medium">BUT Informatique</span>, j'intègre l'<span className="text-[var(--text-primary)] font-medium">ESIEA</span> pour un cursus d'ingénieur. Je recherche une <span className="text-[var(--text-primary)] font-medium">alternance</span> centrée sur le Software Engineering ou la Data/IA.
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <a href="#contact" className={`bg-[var(--accent)] text-white ${buttonMainStyles}`}>
@@ -216,61 +216,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Skills Grid */}
-      <section id="skills" className="py-24 px-6 bg-[var(--bg-primary)]">
-        <div className={sectionInner}>
-          <SectionHeader subtitle="Expertise" title="Compétences" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {SKILL_GROUPS.map((group, idx) => (
-              <div key={idx} className={`bg-[var(--bg-secondary)] p-8 rounded-3xl border border-[var(--border-color)] group shadow-sm flex flex-col h-full ${cardHoverStyles}`}>
-                <h3 className="text-xs font-bold mb-6 text-[var(--accent)] uppercase tracking-widest border-b border-[var(--border-color)] pb-3">{group.category}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {group.skills.map((skill, sIdx) => (
-                    <div key={sIdx} className="px-3 py-1.5 bg-[var(--bg-primary)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-lg text-[10px] font-bold uppercase tracking-tight hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-white transition-all duration-300">
-                      {skill.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-24 px-6 bg-[var(--bg-secondary)]">
-        <div className={sectionInner}>
-          <SectionHeader subtitle="Profil" title="Passions & Atouts" />
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-5 space-y-6 text-[var(--text-secondary)] leading-relaxed text-lg font-light">
-              <p>
-                Je conçois le développement comme une discipline alliant <strong className="text-[var(--text-primary)] font-bold">rigueur technique</strong> et <strong className="text-[var(--text-primary)] font-bold">curiosité constante</strong>.
-              </p>
-              <p>
-                Mon sens de l'analyse hérité des <span className="text-[var(--accent)] font-medium">échecs</span> et ma quête de précision liée à la <span className="text-[var(--accent)] font-medium">F1</span> et la <span className="text-[var(--accent)] font-medium">photographie</span> m'aident à produire un code propre et ergonomique.
-              </p>
-            </div>
-            
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {passions.map((passion, pIdx) => (
-                <div key={pIdx} className="relative group bg-[var(--bg-primary)] p-8 rounded-3xl border border-[var(--border-color)] overflow-hidden transition-all duration-500 h-44 flex flex-col justify-center">
-                  <div 
-                    className="absolute inset-0 opacity-65 md:opacity-0 md:group-hover:opacity-45 transition-all duration-700 ease-out transform scale-110 md:group-hover:scale-100 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${passion.img})` }}
-                  ></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 md:opacity-60"></div>
-                  <div className="relative z-10 transition-transform duration-500 md:group-hover:-translate-y-2">
-                    <div className="text-3xl mb-3 transform md:group-hover:scale-110 transition-transform duration-300 inline-block">{passion.emoji}</div>
-                    <h4 className="font-bold text-[var(--text-primary)] text-lg mb-1">{passion.title}</h4>
-                    <p className="text-[10px] text-[var(--text-secondary)] leading-tight md:group-hover:text-[var(--text-primary)] transition-colors">{passion.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Projects Gallery */}
       <section id="projects" className="py-24 px-6 bg-[var(--bg-primary)]">
         <div className={sectionInner}>
@@ -319,6 +264,61 @@ const App: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Grid */}
+      <section id="skills" className="py-24 px-6 bg-[var(--bg-secondary)]">
+        <div className={sectionInner}>
+          <SectionHeader subtitle="Expertise" title="Compétences" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SKILL_GROUPS.map((group, idx) => (
+              <div key={idx} className={`bg-[var(--bg-primary)] p-8 rounded-3xl border border-[var(--border-color)] group shadow-sm flex flex-col h-full ${cardHoverStyles}`}>
+                <h3 className="text-xs font-bold mb-6 text-[var(--accent)] uppercase tracking-widest border-b border-[var(--border-color)] pb-3">{group.category}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.skills.map((skill, sIdx) => (
+                    <div key={sIdx} className="px-3 py-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-lg text-[10px] font-bold uppercase tracking-tight hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-white transition-all duration-300">
+                      {skill.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 px-6 bg-[var(--bg-primary)]">
+        <div className={sectionInner}>
+          <SectionHeader subtitle="Profil" title="Passions & Atouts" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-5 space-y-6 text-[var(--text-secondary)] leading-relaxed text-lg font-light">
+              <p>
+                Je conçois le développement comme une discipline alliant <strong className="text-[var(--text-primary)] font-bold">rigueur technique</strong> et <strong className="text-[var(--text-primary)] font-bold">curiosité constante</strong>.
+              </p>
+              <p>
+                Mon sens de l'analyse hérité des <span className="text-[var(--accent)] font-medium">échecs</span> et ma quête de précision liée à la <span className="text-[var(--accent)] font-medium">F1</span> et la <span className="text-[var(--accent)] font-medium">photographie</span> m'aident à produire un code propre et ergonomique.
+              </p>
+            </div>
+            
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {passions.map((passion, pIdx) => (
+                <div key={pIdx} className="relative group bg-[var(--bg-secondary)] p-8 rounded-3xl border border-[var(--border-color)] overflow-hidden transition-all duration-500 h-44 flex flex-col justify-center">
+                  <div 
+                    className="absolute inset-0 opacity-65 md:opacity-0 md:group-hover:opacity-45 transition-all duration-700 ease-out transform scale-110 md:group-hover:scale-100 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${passion.img})` }}
+                  ></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-secondary)] via-transparent to-transparent opacity-80 md:opacity-60"></div>
+                  <div className="relative z-10 transition-transform duration-500 md:group-hover:-translate-y-2">
+                    <div className="text-3xl mb-3 transform md:group-hover:scale-110 transition-transform duration-300 inline-block">{passion.emoji}</div>
+                    <h4 className="font-bold text-[var(--text-primary)] text-lg mb-1">{passion.title}</h4>
+                    <p className="text-[10px] text-[var(--text-secondary)] leading-tight md:group-hover:text-[var(--text-primary)] transition-colors">{passion.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

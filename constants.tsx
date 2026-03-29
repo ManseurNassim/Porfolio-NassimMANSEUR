@@ -14,15 +14,23 @@ export const IMAGES = {
 
 export const EXPERIENCES: Experience[] = [
   {
+    date: "Février 2026 - Août 2026",
+    title: "Conseiller Client (Projet EDF)",
+    company: "Concentrix",
+    location: "Compiègne",
+    description: [
+      "Gestion de processus : Prise en charge technique de dossiers réglementés (souscriptions, résiliations, inversions de PRM et raccordements).",
+      "Relationnel : Analyse et gestions des besoins clients au téléphone."
+    ]
+  },
+  {
     date: "Mars 2025 - Juin 2025",
-    title: "Développeur Web (Stage)",
+    title: "Développeur Web",
     company: "Afidium",
     location: "Distanciel",
     description: [
-      "Développement et maintenance d'outils web B2B.",
-      "Participation à la création de maquettes (Figma).",
-      "Ajout de fonctionnalités complexes : Angular, PHP, PostgreSQL et Elasticsearch.",
-      "Réalisation de tests pour les nouveaux modules."
+      "Conception Fullstack : Développement et maintenance de fonctionnalités critiques avec Angular et PHP.",
+      "Optimisation Data : Amélioration de la performance des recherches via l'intégration et le requêtage sur Elasticsearch et PostgreSQL."
     ]
   },
   {
@@ -31,16 +39,22 @@ export const EXPERIENCES: Experience[] = [
     company: "NTI Solutions",
     location: "Beauvais",
     description: [
-      "Configuration réseau de caméras et d'enregistreurs vidéos.",
-      "Développement de programmes en PowerShell et Python pour optimiser les processus internes."
+      "Automatisation de Processus : Conception et déploiement de scripts en PowerShell et Python pour automatiser les tâches récurrentes.",
+      "Infrastructure Réseau : Configuration technique et sécurisation d'équipements IP (caméras et enregistreurs vidéo)."
     ]
   }
 ];
 
 export const EDUCATION = [
   {
+    date: "2026 - 2029",
+    title: "Cycle Ingénieur (Apprentissage)",
+    institution: "ESIEA Paris",
+    description: "Spécialisation : Intelligence Artificielle & Data Science ou Software Engineering. Rythme : 2 semaines École / 2 semaines Entreprise. Projet International."
+  },
+  {
     date: "2022 - 2025",
-    title: "Bachelor Universitaire de Technologie Informatique",
+    title: "BUT Informatique (Réalisation d'applications)",
     institution: "Université Sorbonne Paris Nord (IUT de Villetaneuse)",
     description: "Spécialité : Réalisation d'applications. Conception web/mobile, POO (Java, Python, PHP), SQL/NoSQL, architecture logicielle et gestion de projets agiles."
   },
@@ -54,38 +68,40 @@ export const EDUCATION = [
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
-    category: "Développement & Frameworks",
+    category: "Génie Logiciel & Fullstack",
     skills: [
-      { name: "ReactJs / Angular / VueJs" },
+      { name: "Node.js / Express" },
+      { name: "React / Angular" },
       { name: "TypeScript / JavaScript" },
-      { name: "PHP (Modèle MVC)" },
-      { name: "Java (Springboot, JUnit)" },
-      { name: "Python" }
+      { name: "Architecture MVC & REST" },
+      { name: "Figma (UI/UX)" }
     ]
   },
   {
-    category: "Données & Backend",
+    category: "Data Engineering & IA",
     skills: [
-      { name: "PostgreSQL (JSONB, Triggers)" },
-      { name: "MongoDB / Redis / Elasticsearch" },
-      { name: "PowerShell / VBA" }
+      { name: "PostgreSQL" },
+      { name: "MongoDB / Redis" },
+      { name: "Python (Pandas)" },
+      { name: "Modélisation & IA" }
     ]
   },
   {
-    category: "Design & Post-Production",
+    category: "DevOps & Infrastructures",
     skills: [
-      { name: "Figma" },
-      { name: "Adobe Lightroom" },
-      { name: "DaVinci Resolve" }
+      { name: "Docker & Sécurité (OWASP)" },
+      { name: "Linux (Ubuntu/Debian)" },
+      { name: "Réseaux (IP, SSH, HTTPS)" },
+      { name: "Automatisation (PowerShell)" }
     ]
   },
   {
-    category: "Environnement & IDE",
+    category: "Méthodologie & Outils",
     skills: [
-      { name: "Docker / Git / GitLab" },
-      { name: "Visual Studio Code" },
-      { name: "IntelliJ / Android Studio" },
-      { name: "Linux (Ubuntu / Debian)" }
+      { name: "Git & CI/CD" },
+      { name: "Méthodes Agiles" },
+      { name: "Tests de validation" },
+      { name: "Adobe Lightroom / Resolve" }
     ]
   }
 ];
