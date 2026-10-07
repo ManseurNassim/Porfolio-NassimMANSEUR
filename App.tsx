@@ -2,12 +2,24 @@
 import React, { useState, useEffect, CSSProperties } from 'react';
 import Navbar from './components/Navbar';
 import Viewfinder from './components/Viewfinder';
-import { EXPERIENCES, SKILL_GROUPS, PROJECTS, EDUCATION, IMAGES } from './constants';
+import ProjectCard from './components/ProjectCard';
+import { EXPERIENCES, SKILL_GROUPS, PROJECTS, EDUCATION, IMAGES, CV_URL, LINKS } from './constants';
+
+const SectionHeader = ({ subtitle, title }: { subtitle: string, title: string }) => (
+  <div className="mb-12 text-left">
+    <h3 className="text-[var(--accent)] font-mono text-xs uppercase tracking-[0.3em] mb-2 font-bold">{subtitle}</h3>
+    <h2 className="text-4xl md:text-5xl font-heading font-black italic tracking-tighter uppercase leading-none text-[var(--text-primary)]">
+      {title}
+    </h2>
+    <div className="w-12 h-1 bg-[var(--accent)] mt-4 rounded-full"></div>
+  </div>
+);
 
 const App: React.FC = () => {
   const [isLightMode, setIsLightMode] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleTheme = () => {
@@ -17,6 +29,7 @@ const App: React.FC = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
+    setFormError(false);
     
     try {
       const response = await fetch(form.action, {
@@ -31,9 +44,12 @@ const App: React.FC = () => {
         setFormSubmitted(true);
         form.reset();
         setTimeout(() => setFormSubmitted(false), 4000);
+      } else {
+        setFormError(true);
       }
     } catch (error) {
       console.error('Erreur lors de l\'envoi du formulaire', error);
+      setFormError(true);
     }
   };
 
@@ -84,30 +100,10 @@ const App: React.FC = () => {
     }
   ];
 
-  const SectionHeader = ({ subtitle, title }: { subtitle: string, title: string }) => (
-    <div className="mb-12 text-left">
-      <h3 className="text-[var(--accent)] font-mono text-xs uppercase tracking-[0.3em] mb-2 font-bold">{subtitle}</h3>
-      <h2 className="text-4xl md:text-5xl font-heading font-black italic tracking-tighter uppercase leading-none text-[var(--text-primary)]">
-        {title}
-      </h2>
-      <div className="w-12 h-1 bg-[var(--accent)] mt-4 rounded-full"></div>
-    </div>
-  );
-
   // Style de carte standardisé avec effet "Glow" discret au survol
   const cardHoverStyles = "transition-all duration-500 hover:border-[var(--accent)] hover:shadow-2xl hover:shadow-[var(--accent)]/[0.12] hover:bg-[var(--accent)]/[0.01]";
   const buttonMainStyles = "px-8 py-4 rounded-full font-bold transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-95 shadow-xl shadow-purple-500/30";
   const sectionInner = "max-w-5xl mx-auto";
-  const projectTitleStyle: CSSProperties = {
-    WebkitTextStroke: '0px transparent',
-    textShadow: '0 2px 10px rgba(0,0,0,0.65), 0 0 1px rgba(255,255,255,0.2)'
-  };
-
-  const projectCategoryStroke: CSSProperties = {
-    WebkitTextStroke: '0px transparent',
-    textShadow: '0 1px 3px rgba(0,0,0,0.35)'
-  };
-
   return (
     <div className="relative overflow-x-hidden theme-transition selection:bg-[var(--accent)] selection:text-white">
       <Navbar isLightMode={isLightMode} toggleTheme={toggleTheme} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
@@ -139,19 +135,19 @@ const App: React.FC = () => {
             <div className="absolute inset-0 bg-[var(--accent)]/10 mix-blend-color group-hover:opacity-0 transition-opacity"></div>
           </div>
           <div className="text-center md:text-left flex-1">
-            <h2 className="text-[var(--accent)] font-mono text-sm tracking-widest mb-4 uppercase font-bold">Apprenti Ingénieur en Informatique</h2>
+            <h2 className="text-[var(--accent)] font-mono text-sm tracking-widest mb-4 uppercase font-bold">Élève ingénieur · IA & Data Science</h2>
             <h1 className="text-5xl md:text-7xl font-heading font-black mb-4 tracking-tighter leading-none">
               Nassim <span className="text-[var(--text-secondary)] block md:inline italic">Manseur</span>
             </h1>
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-light max-w-2xl mb-10 leading-relaxed">
-              Titulaire d'un <span className="text-[var(--text-primary)] font-medium">BUT Informatique</span>, j'intègre l'<span className="text-[var(--text-primary)] font-medium">ESIEA</span> pour un cursus d'ingénieur. Je recherche une <span className="text-[var(--text-primary)] font-medium">alternance</span> centrée sur le Software Engineering ou la Data/IA.
+              Élève ingénieur à l'<span className="text-[var(--text-primary)] font-medium">ESIEA</span> en majeure <span className="text-[var(--text-primary)] font-medium">IA & Data Science</span>, après un BUT Informatique. Je recherche une <span className="text-[var(--text-primary)] font-medium">alternance de 36 mois</span> (2 semaines / 2 semaines) en Data, IA ou développement logiciel orienté données.
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <a href="#contact" className={`bg-[var(--accent)] text-white ${buttonMainStyles}`}>
                 Me contacter
               </a>
               <a 
-                href="/CV_NASSIM_MANSEUR.pdf" 
+                href={CV_URL} 
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`bg-transparent border-2 border-[var(--accent)] text-[var(--text-primary)] hover:bg-[var(--accent)] hover:text-white flex items-center gap-2 ${buttonMainStyles}`}
@@ -166,8 +162,23 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      {/* Projects */}
+      <section id="projects" className="py-24 px-6 bg-[var(--bg-primary)]">
+        <div className={sectionInner}>
+          <SectionHeader subtitle="Réalisations" title="Projets" />
+          <p className="-mt-6 mb-10 max-w-2xl text-lg font-light leading-relaxed text-[var(--text-secondary)]">
+            Des projets personnels, du pipeline de données au globe 3D : chacun part d'un problème concret.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
+            {PROJECTS.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Experience Section */}
-      <section id="experience" className="py-24 px-6 bg-[var(--bg-primary)]">
+      <section id="experience" className="py-24 px-6 bg-[var(--bg-secondary)]">
         <div className={sectionInner}>
           <SectionHeader subtitle="Expériences" title="Parcours Pro" />
           <div className="relative border-l-2 border-[var(--border-color)] ml-3">
@@ -196,12 +207,12 @@ const App: React.FC = () => {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="py-24 px-6 bg-[var(--bg-secondary)]">
+      <section id="education" className="py-24 px-6 bg-[var(--bg-primary)]">
         <div className={sectionInner}>
           <SectionHeader subtitle="Formation" title="Diplômes" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {EDUCATION.map((edu, idx) => (
-              <div key={idx} className={`bg-[var(--bg-primary)] p-10 rounded-3xl border border-[var(--border-color)] group relative overflow-hidden ${cardHoverStyles}`}>
+              <div key={idx} className={`bg-[var(--bg-secondary)] p-10 rounded-3xl border border-[var(--border-color)] group relative overflow-hidden ${cardHoverStyles}`}>
                 <div className="relative z-10">
                   <div className="flex flex-col gap-2 mb-6">
                     <span className="text-[var(--accent)] font-mono text-sm font-bold">{edu.date}</span>
@@ -216,63 +227,11 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Projects Gallery */}
-      <section id="projects" className="py-24 px-6 bg-[var(--bg-primary)]">
-        <div className={sectionInner}>
-          <SectionHeader subtitle="Portfolio" title="Projets" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {PROJECTS.map((project) => (
-              <div 
-                key={project.id} 
-                className="group relative block rounded-3xl overflow-hidden aspect-[16/10] bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-xl"
-              >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-all duration-700 md:group-hover:scale-105 opacity-70 md:opacity-70 blur-0 md:blur-[2px] md:group-hover:blur-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80 md:opacity-80 md:group-hover:opacity-95 transition-opacity"></div>
-                
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10" aria-label={`Voir le projet ${project.title}`}></a>
-
-                {project.githubLink && (
-                  <div className="absolute top-6 right-6 z-20 flex flex-col gap-2">
-                    {(Array.isArray(project.githubLink) ? project.githubLink : [project.githubLink]).map((link, i) => (
-                      <a 
-                        key={i}
-                        href={link} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="w-12 h-12 bg-[var(--bg-primary)]/80 backdrop-blur-sm border border-[var(--border-color)] rounded-full flex items-center justify-center text-[var(--text-primary)] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:bg-[#18181b] group-hover:border-[#18181b] group-hover:text-white hover:scale-110 shadow-lg" 
-                        aria-label={`Code source sur GitHub ${Array.isArray(project.githubLink) ? `(Partie ${i + 1})` : ''}`}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                        </svg>
-                      </a>
-                    ))}
-                  </div>
-                )}
-
-                <div className="absolute bottom-0 left-0 p-8 pb-10 w-full transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 pointer-events-none z-20">
-                  <h4 className="text-3xl font-bold mb-4 tracking-tight leading-tight text-[var(--text-primary)]" style={projectTitleStyle}>{project.title}</h4>
-                  <div className="flex gap-2 flex-wrap opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity delay-100">
-                    {project.tags.map((tag, tIdx) => (
-                      <span key={tIdx} className="px-3 py-1 text-[10px] bg-[var(--bg-primary)] text-[var(--text-secondary)] rounded-full border border-[var(--border-color)] uppercase font-bold">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Skills Grid */}
       <section id="skills" className="py-24 px-6 bg-[var(--bg-secondary)]">
         <div className={sectionInner}>
           <SectionHeader subtitle="Expertise" title="Compétences" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {SKILL_GROUPS.map((group, idx) => (
               <div key={idx} className={`bg-[var(--bg-primary)] p-8 rounded-3xl border border-[var(--border-color)] group shadow-sm flex flex-col h-full ${cardHoverStyles}`}>
                 <h3 className="text-xs font-bold mb-6 text-[var(--accent)] uppercase tracking-widest border-b border-[var(--border-color)] pb-3">{group.category}</h3>
@@ -341,7 +300,7 @@ const App: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-xs uppercase font-bold tracking-widest text-[var(--text-secondary)] mb-1">Email</h4>
-                    <a href="mailto:nassimmanseur1@gmail.com" target="_blank" rel="noopener noreferrer" className="text-base font-bold hover:text-[var(--accent)] transition-colors">nassimmanseur1@gmail.com</a>
+                    <a href={`mailto:${LINKS.email}`} className="text-base font-bold hover:text-[var(--accent)] transition-colors break-all">{LINKS.email}</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-5 group">
@@ -358,8 +317,8 @@ const App: React.FC = () => {
                 </div>
               </div>
               <div className="pt-8 border-t border-[var(--border-color)] flex gap-4">
-                <a href="https://www.linkedin.com/in/nassim-manseur" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl font-bold hover:bg-[var(--accent)] hover:text-white transition-all shadow-lg shadow-purple-500/5">LinkedIn</a>
-                <a href="https://github.com/ManseurNassim" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl font-bold hover:bg-[var(--accent)] hover:text-white transition-all shadow-lg shadow-purple-500/5">GitHub</a>
+                <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl font-bold hover:bg-[var(--accent)] hover:text-white transition-all shadow-lg shadow-purple-500/5">LinkedIn</a>
+                <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl font-bold hover:bg-[var(--accent)] hover:text-white transition-all shadow-lg shadow-purple-500/5">GitHub</a>
               </div>
             </div>
             <div className="lg:col-span-7 relative">
@@ -374,6 +333,11 @@ const App: React.FC = () => {
                   Envoyer
                 </button>
               </form>
+              {formError && (
+                <p role="alert" className="mt-4 text-sm text-red-500">
+                  L'envoi a échoué. Réessayez ou écrivez-moi directement à {LINKS.email}.
+                </p>
+              )}
               
               {/* Success Message */}
               <div className={`absolute inset-0 flex items-center justify-center bg-[var(--bg-primary)]/95 backdrop-blur-sm rounded-2xl transition-all duration-500 ${formSubmitted ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
