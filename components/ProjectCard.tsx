@@ -72,7 +72,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const idDetail = `detail-projet-${project.id}`;
 
   return (
-    <article className="group flex flex-col rounded-3xl overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-xl transition-all duration-500 hover:border-[var(--accent)] hover:shadow-2xl hover:shadow-[var(--accent)]/[0.12]">
+    <article id={`projet-${project.id}`} className="group flex flex-col scroll-mt-24 rounded-3xl overflow-hidden bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-xl transition-all duration-500 hover:border-[var(--accent)] hover:shadow-2xl hover:shadow-[var(--accent)]/[0.12]">
       <div className="relative aspect-[16/10] overflow-hidden bg-black">
         <ProjectMedia project={project} />
       </div>

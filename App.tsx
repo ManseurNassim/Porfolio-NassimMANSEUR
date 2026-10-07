@@ -3,6 +3,7 @@ import React, { useState, useEffect, CSSProperties } from 'react';
 import Navbar from './components/Navbar';
 import Viewfinder from './components/Viewfinder';
 import ProjectCard from './components/ProjectCard';
+import GameBoyProjets from './components/GameBoyProjets';
 import { EXPERIENCES, SKILL_GROUPS, PROJECTS, EDUCATION, IMAGES, CV_URL, LINKS } from './constants';
 
 const SectionHeader = ({ subtitle, title }: { subtitle: string, title: string }) => (
@@ -169,6 +170,11 @@ const App: React.FC = () => {
           <p className="-mt-6 mb-10 max-w-2xl text-lg font-light leading-relaxed text-[var(--text-secondary)]">
             Des projets personnels, du pipeline de données au globe 3D : chacun part d'un problème concret.
           </p>
+          <GameBoyProjets projets={PROJECTS} onToggleTheme={toggleTheme} />
+
+          <h3 className="mt-24 mb-8 font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+            Tous les projets en détail
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
             {PROJECTS.map((project) => (
               <ProjectCard key={project.id} project={project} />

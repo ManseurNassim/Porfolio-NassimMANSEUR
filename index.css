@@ -3,6 +3,7 @@
 @theme {
   --font-sans: "Outfit", sans-serif;
   --font-heading: "Space Grotesk", sans-serif;
+  --font-pixel: "Press Start 2P", monospace;
 }
 
 :root {
@@ -67,4 +68,217 @@
       color 0.35s ease,
       border-color 0.35s ease;
   }
+}
+
+/* ---------- Game Boy des projets ---------- */
+:root {
+  /* Thème sombre : coque violet nuit */
+  --gb-body: #2b2442;
+  --gb-body-light: #3a3158;
+  --gb-body-shade: #1a1529;
+  --gb-bezel: #121019;
+  --gb-dpad: #0e0d12;
+  --gb-dpad-light: #3d3a4a;
+  --gb-btn: #8b5cf6;
+  --gb-btn-light: #c4b5fd;
+  --gb-btn-shade: #4c1d95;
+  --gb-label: #c4b5fd;
+  --gb-pill: #4a4260;
+}
+.light-theme {
+  /* Thème clair : coque crème, boutons bleus */
+  --gb-body: #e8e4da;
+  --gb-body-light: #f6f3ec;
+  --gb-body-shade: #b9b3a5;
+  --gb-bezel: #3b3f4c;
+  --gb-dpad: #22242b;
+  --gb-dpad-light: #4a4d57;
+  --gb-btn: #2563eb;
+  --gb-btn-light: #93c5fd;
+  --gb-btn-shade: #1e3a8a;
+  --gb-label: #1e3a8a;
+  --gb-pill: #8e897f;
+}
+
+@layer components {
+  .gb-coque {
+    background:
+      linear-gradient(160deg, var(--gb-body-light) 0%, var(--gb-body) 35%, var(--gb-body) 75%, var(--gb-body-shade) 100%);
+    border-radius: 18px 18px 72px 18px;
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+      inset -3px -4px 0 rgba(0, 0, 0, 0.18),
+      0 30px 60px -20px rgba(0, 0, 0, 0.55),
+      0 12px 24px -12px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Fines lignes de balayage sur l'écran */
+  .gb-scanlines {
+    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 4px);
+    mix-blend-mode: multiply;
+  }
+
+  /* Flash de « changement de cartouche » */
+  .gb-flash {
+    animation: gb-flash 420ms ease-out forwards;
+    background:
+      repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0 2px, rgba(0, 0, 0, 0.6) 2px 4px),
+      var(--gb-bezel);
+  }
+  @keyframes gb-flash {
+    0% { opacity: 1; transform: scaleY(1); }
+    40% { opacity: 1; transform: scaleY(0.04); }
+    100% { opacity: 0; transform: scaleY(0.04); }
+  }
+
+  .gb-titre {
+    animation: gb-titre 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  @keyframes gb-titre {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- Croix directionnelle en 3D --- */
+  .gb-dpad-puits {
+    /* Creux circulaire dans la coque, où la croix est enchâssée */
+    background: radial-gradient(circle at 50% 45%, var(--gb-body-shade), var(--gb-body) 72%);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 3px rgba(255, 255, 255, 0.25);
+  }
+  .gb-dpad-scene {
+    perspective: 340px;
+    perspective-origin: 50% 40%;
+  }
+  .gb-dpad-objet {
+    transform-style: preserve-3d;
+    transform: rotateX(16deg) translateZ(6px);
+    transition: transform 90ms cubic-bezier(0.3, 0.7, 0.4, 1.4);
+  }
+  /* Le bras appuyé s'enfonce : la croix pivote autour de son centre */
+  .gb-dpad-objet[data-dir="up"] { transform: rotateX(28deg) translateZ(3px); }
+  .gb-dpad-objet[data-dir="down"] { transform: rotateX(4deg) translateZ(3px); }
+  .gb-dpad-objet[data-dir="left"] { transform: rotateX(16deg) rotateY(-13deg) translateZ(3px); }
+  .gb-dpad-objet[data-dir="right"] { transform: rotateX(16deg) rotateY(13deg) translateZ(3px); }
+
+  .gb-croix {
+    clip-path: polygon(33.3% 0, 66.7% 0, 66.7% 33.3%, 100% 33.3%, 100% 66.7%, 66.7% 66.7%, 66.7% 100%, 33.3% 100%, 33.3% 66.7%, 0 66.7%, 0 33.3%, 33.3% 33.3%);
+    border-radius: 6px;
+  }
+  /* Tranches empilées = épaisseur visible quand la croix bascule */
+  .gb-croix-tranche {
+    background: linear-gradient(180deg, #2b2a31, #050507);
+  }
+  .gb-croix-dessus {
+    transform: translateZ(0);
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.16), transparent 55%),
+      linear-gradient(150deg, var(--gb-dpad-light), var(--gb-dpad) 70%);
+    transition: background 90ms;
+  }
+  .gb-croix-centre {
+    width: 15px;
+    height: 15px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 50% 60%, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.15));
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .gb-bras {
+    position: relative;
+    transition: background 90ms, box-shadow 90ms;
+  }
+  /* Flèches gravées sur chaque branche */
+  .gb-bras i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.12));
+  }
+  .gb-bras[data-sens="up"] i { border-bottom: 8px solid rgba(0, 0, 0, 0.55); border-top-width: 0; transform: translate(-50%, -60%); }
+  .gb-bras[data-sens="down"] i { border-top: 8px solid rgba(0, 0, 0, 0.55); border-bottom-width: 0; transform: translate(-50%, -40%); }
+  .gb-bras[data-sens="left"] i { border-right: 8px solid rgba(0, 0, 0, 0.55); border-left-width: 0; transform: translate(-60%, -50%); }
+  .gb-bras[data-sens="right"] i { border-left: 8px solid rgba(0, 0, 0, 0.55); border-right-width: 0; transform: translate(-40%, -50%); }
+  .gb-bras[data-appuye="true"] {
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Ombre portée sous la croix, qui glisse du côté appuyé */
+  .gb-dpad-ombre {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.45), transparent 65%);
+    transform: translate(0, 9px);
+    transition: transform 90ms ease-out, opacity 90ms;
+    filter: blur(4px);
+  }
+  .gb-dpad-ombre[data-dir="up"] { transform: translate(0, 2px) scale(0.92); }
+  .gb-dpad-ombre[data-dir="down"] { transform: translate(0, 12px) scale(0.92); }
+  .gb-dpad-ombre[data-dir="left"] { transform: translate(-5px, 7px) scale(0.92); }
+  .gb-dpad-ombre[data-dir="right"] { transform: translate(5px, 7px) scale(0.92); }
+
+  /* --- Boutons A / B --- */
+  .gb-rond {
+    background: radial-gradient(circle at 35% 30%, var(--gb-btn-light) 0%, var(--gb-btn) 45%, var(--gb-btn-shade) 100%);
+    box-shadow:
+      0 5px 0 var(--gb-btn-shade),
+      0 9px 14px rgba(0, 0, 0, 0.35),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+    transform: translateY(0);
+    transition: transform 60ms ease-out, box-shadow 60ms ease-out, filter 60ms;
+  }
+  .gb-rond[data-appuye="true"] {
+    transform: translateY(5px) scale(0.96);
+    filter: brightness(0.8) saturate(1.1);
+    box-shadow:
+      0 0 0 var(--gb-btn-shade),
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      inset 0 4px 9px rgba(0, 0, 0, 0.55);
+  }
+
+  /* --- START / SELECT --- */
+  .gb-pilule {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--gb-pill) 80%, white), var(--gb-pill));
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35), 0 5px 8px rgba(0, 0, 0, 0.25);
+    transform: translateY(0);
+    transition: transform 60ms ease-out, box-shadow 60ms ease-out;
+  }
+  .gb-pilule[data-appuye="true"] {
+    transform: translateY(3px);
+    filter: brightness(0.8);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.45);
+  }
+
+  .gb-grille span {
+    background: var(--gb-body-shade);
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  .gb-led {
+    background: radial-gradient(circle at 40% 35%, #fecaca, #ef4444 55%, #991b1b);
+    box-shadow: 0 0 8px 2px rgba(239, 68, 68, 0.7);
+    animation: gb-led 3s ease-in-out infinite;
+  }
+  @keyframes gb-led {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+
+  .projet-surligne {
+    animation: projet-surligne 1.6s ease-out;
+  }
+  @keyframes projet-surligne {
+    0%, 30% { box-shadow: 0 0 0 4px var(--accent); }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gb-flash, .gb-titre, .gb-led, .projet-surligne { animation: none; }
+  .gb-flash { opacity: 0; }
 }
